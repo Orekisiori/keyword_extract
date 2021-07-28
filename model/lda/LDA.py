@@ -17,7 +17,7 @@ _get_abs_path = lambda path: os.path.normpath(os.path.join(os.getcwd(), path))
 
 # get_stopwords获取停用词，用以后面的过滤
 def get_stopwords():
-    stopwords = [line.strip() for line in open(_get_abs_path('data/stopwords_LDA.txt')).readlines()]
+    stopwords = [line.strip() for line in open(_get_abs_path('data/stopwords_LDA.txt'),'r',encoding='gbk').readlines()]
     return stopwords
 
 # 定义一个分词方法
@@ -50,14 +50,14 @@ def load_data():
     doc_list=[]
     for i in range(64):
         path=_get_abs_path("data/lda/dic")+str(i)+".txt"
-        f=open(path,"r",encoding="utf-8")
+        f=open(path,'r',encoding='gbk')
         li=eval(f.read())
         doc_list+=li
     return doc_list
 
 def data_make():
     path= _get_abs_path("data/corpus/corpus2021.txt")
-    stopwords = [line.strip() for line in open(_get_abs_path('data/stopwords_LDA.txt')).readlines()]
+    stopwords = [line.strip() for line in open(_get_abs_path('data/stopwords_LDA.txt'),'r',encoding='gbk').readlines()]
     for k in range(0,64):
         doc_list = []
         for i in range(1000):
@@ -67,7 +67,7 @@ def data_make():
             filter_list=[s for s in seg_list if not s in stopwords and len(s) > 1]
             doc_list.append(filter_list)
         file_name="/dic"+str(k)+".txt"
-        f=open(_get_abs_path("data/lda/")+file_name,"w",encoding="utf-8")
+        f=open(_get_abs_path("data/lda/")+file_name,"w",encoding="gbk")
         f.write(str(doc_list))
         f.close()
 
@@ -82,7 +82,7 @@ class TopicModel(object):
             self.tfidf_model=joblib.load(_get_abs_path("data/lda/tfidf_model.pkl"))
             self.dictionary=corpora.Dictionary.load(_get_abs_path('data/lda/dictionary.dict'))
 
-            f=open(_get_abs_path("data/lda/wordtopic.txt"), 'r')
+            f=open(_get_abs_path("data/lda/wordtopic.txt"),'r',encoding='gbk')
             self.wordtopic_dic=eval(f.read())
             f.close()
         else:
@@ -107,7 +107,7 @@ class TopicModel(object):
             word_dic = self.word_dictionary(doc_list)
             self.wordtopic_dic = self.get_wordtopic(word_dic)
             # 保存数据，提高之后运行的效率
-            f = open(_get_abs_path("data/lda/wordtopic.txt"), 'w')
+            f = open(_get_abs_path("data/lda/wordtopic.txt"), 'w',encoding="gbk")
             f.write(str(self.wordtopic_dic))
             f.close()
     # LDA的训练时根据现有的数据集生成文档-主题分布矩阵和主题-词分布矩阵，Gensim中有实现好的方法，可以直接调用
@@ -176,7 +176,7 @@ class TopicModel(object):
 # 对外提供的函数
 def keyword_extraction(temp):
     if os.path.exists(temp):
-        f=open(temp,"r",encoding="utf-8")
+        f=open(temp,'r',encoding='gbk')
         text=f.read()
         f.close()
     else:

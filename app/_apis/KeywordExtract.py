@@ -7,16 +7,16 @@ import model.lda.LDA as lda
 import os
 import jieba.analyse
 
+
+def jieba_method(input):
+    tags = jieba.analyse.extract_tags(input, 20)
+    return tags
+
 class KeywordExtract(BaseResource):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.parser.add_argument('name', required=True, type=str,
                                  location=['form', 'json', 'args', 'files', 'values', 'headers'])
-
-    def jieba_method(input):
-        tags = jieba.analyse.extract_tags(input, 20)
-        return tags
-
 
     def post(self):
         res = []
