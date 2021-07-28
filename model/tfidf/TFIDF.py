@@ -10,7 +10,7 @@ def get_stopword_list():
     # 停用词表存储路径，每一行为一个词，按行读取进行加载
     # 进行编码转换确保匹配准确率
     stop_word_path = _get_abs_path('data/stop_words_TFIDF.txt')
-    stopword_list = [sw.strip() for sw in open(stop_word_path).readlines()]
+    stopword_list = [sw.strip() for sw in open(stop_word_path, 'r', encoding="gbk").readlines()]
     return stopword_list
 
 
@@ -48,9 +48,9 @@ def load_data(corpus_path=_get_abs_path('data/corpus/corpus2021.txt')):
     '''
     doc_list = []  # 结果
     stop_word_path = _get_abs_path('data/stop_words_TFIDF.txt')
-    stopword_list = [sw.strip() for sw in open(stop_word_path).readlines()]
+    stopword_list = [sw.strip() for sw in open(stop_word_path, 'r', encoding="gbk").readlines()]
     print(str(stopword_list))
-    for line in open(corpus_path, 'r', encoding="utf-8"):
+    for line in open(corpus_path, 'r', encoding="gbk"):
         content = line.strip()  # 每行的数据
         seg_list = seg_to_list(content)  # 分词
         filter_list = [s for s in seg_list if not s in stopword_list and len(s) > 1]
@@ -62,15 +62,15 @@ def load_data(corpus_path=_get_abs_path('data/corpus/corpus2021.txt')):
 
 def train_idf():
     if os.access(_get_abs_path('data/tfidf/idf.txt'), os.F_OK):
-        file = open(_get_abs_path('data/tfidf/idf.txt'), mode='r')
-        file2 = open(_get_abs_path('data/tfidf/default_idf.txt'), mode='r')
+        file = open(_get_abs_path('data/tfidf/idf.txt'), 'r' ,encoding="gbk")
+        file2 = open(_get_abs_path('data/tfidf/default_idf.txt'), 'r', encoding="gbk")
         idf_dic = eval(file.read())
         default_idf = eval(file2.read())
     else:
         doc_list = load_data()
         idf_dic = {}  # idf对应的字典
-        file = open(_get_abs_path('data/tfidf/idf.txt'), mode='w')  # 打开文件，没有则创建
-        file2 = open(_get_abs_path('data/tfidf/default_idf.txt'), mode='w')
+        file = open(_get_abs_path('data/tfidf/idf.txt'), 'w', encoding="gbk")  # 打开文件，没有则创建
+        file2 = open(_get_abs_path('data/tfidf/default_idf.txt'), 'w', encoding="gbk")
         tt_count = len(doc_list)  # 总文档数
         # 每个词出现的文档数
         for doc in doc_list:
@@ -144,7 +144,7 @@ class TfIdf(object):
 
 def tfidf_extract(temp):
     if os.path.exists(temp):
-        text = open(temp, 'r', encoding='utf-8').read()
+        text = open(temp, 'r', encoding="gbk").read()
     else:
         text = temp
     seg_list = seg_to_list(text)
