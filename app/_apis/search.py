@@ -1,3 +1,4 @@
+'''
 import json
 from flask import Flask,request,jsonify
 from annoy import AnnoyIndex
@@ -39,3 +40,5 @@ class search(BaseResource):
         if res == None:
             res = ['WRONG!']
         return jsonify({'sim_words': res})
+
+'''

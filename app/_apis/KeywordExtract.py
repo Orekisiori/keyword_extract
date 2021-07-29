@@ -45,7 +45,7 @@ class KeywordExtract(BaseResource):
         else:
             print('there should be only 2 params')
 
-        print(res)
+        print(res,'\n\n')
         return jsonify({'keyword': res})
 
 
