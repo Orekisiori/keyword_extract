@@ -1,3 +1,9 @@
+项目大量参考：
+
+[https://github.com/zmy537565154/flask-project](https://github.com/zmy537565154/flask-project)
+
+[分享一个flask高并发部署方案](https://blog.csdn.net/zmy941110/article/details/89639883)
+
 
 
 ## 框架结构
@@ -208,7 +214,6 @@ front将json解开成list，返回给接口
 **服务器端效果**
 
 ![image-20210729124727183](https://i.loli.net/2021/07/29/1MeRwPUlScV6pJy.png)
-
 
 
 
